@@ -1,0 +1,69 @@
+[alias]
+	# Clone a repository including all submodules
+	cr = clone --recursive
+
+	# View the current working tree status using the default (verbose) format
+	sv = status
+
+	# View the current working tree status using the short format
+	s = status -s
+
+	# Pull in remote changes for the current repository
+	p = pull
+
+	# Push force with lease (safer and, normally, desired)
+	pushf = push --force-with-lease
+
+	# Push a local branch upstream to remote
+	pushu = push --set-upstream origin HEAD
+
+	# Interactive rebase with the given number of latest commits (defaults to HEAD)
+	ri = "!ri() { git rebase -i HEAD~${1:-0}; }; ri"
+
+	# Adds all
+	a = add --all
+
+	# Adds all patching
+	ap = add --all --patch
+
+	# Commits verbose (shows changes)
+	commit = commit --verbose
+
+	# Commits with in-line message
+	cm = commit --verbose --message
+
+	# Commits all changes
+	ca = !git add --all && git commit --all --verbose
+
+	# Amend the currently staged files to the state `$number` revisions (defaults to HEAD)
+	amend = !"a() { git commit --amend --reuse-message=HEAD~${1:-0}; }; a"
+
+	# Switch to a branch, creating it if necessary
+	go = "!go() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; go"
+
+	# `git d $number` shows the diff between the state `$number` (defaults to HEAD) revisions ago and the current state
+	d = !"d() { git diff --patch-with-stat HEAD~${1:-0}; }; git diff-index --quiet HEAD -- || clear; d"
+
+	# `git log $number` views abbreviated SHA, description, and history graph of the latest `$number` commits (defaults to 20)
+	l = !"l() { git log --pretty=oneline -n ${1:-20} --graph --abbrev-commit; }; l"
+
+	# Color graph log view
+	graph = log --graph --color --pretty=format:"%C(yellow)%H%C(green)%d%C(reset)%n%x20%cd%n%x20%cn%x20(%ce)%n%x20%s%n"
+
+	# Show verbose output about tags, branches or remotes
+	tags = tag --list
+	branches = branch --all
+	remotes = remote --verbose
+
+	# List contributors with number of commits
+	contributors = shortlog --summary --numbered
+
+	# List aliases
+	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | sort
+[user]
+	name = Juan Esteras
+	email = juanesterasgonzalez@gmail.com
+[core]
+	editor = gedit
+[submodule]
+	recurse = true
